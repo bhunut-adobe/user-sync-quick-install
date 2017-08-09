@@ -108,6 +108,10 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
 
     Write-Host "Completed - You can begin to edit configuration files in $USTFolder"
     Pause
+
+    #Open UST Install Folder
+
+    & explorer.exe $USTFolder
 }
 
 else
