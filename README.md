@@ -9,12 +9,12 @@ Simply copy either command below to run the install script remotely.
 Running from PowerShell:
 
 ```powershell
-Set-ExecutionPolicy bypass; iex ((New-Object System.Net.WebClient).DownloadString('https://github.com/bhunut-adobe/user-sync-quick-install/blob/master/install.ps1'))
+Set-ExecutionPolicy bypass; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/bhunut-adobe/user-sync-quick-install/master/install.ps1'))
 ```
 Running from Command Prompt:
 
-```
-@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://github.com/bhunut-adobe/user-sync-quick-install/blob/master/install.ps1'))"
+```dos
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/bhunut-adobe/user-sync-quick-install/master/install.ps1'))"
 ```
 
 Please note: This will install UST under C:\user_sync
