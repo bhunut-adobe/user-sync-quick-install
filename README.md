@@ -23,7 +23,7 @@ This will install User Sync Tool under C:\user_sync
 
 This script downloaded the following into temp folder C:\Users\\[Username]\Appdata\Local\Temp\USTDownload
 
-[Standalone 7-zip](http://www.7-zip.org/a/7za920.zip)<br>
-[Python 3.6.2 x64](https://www.python.org/ftp/python/3.6.2/python-3.6.2-amd64.exe)<br>
-[User Sync Tool 2.2 PY3.6 for Windows](https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2/user-sync-v2.2-windows-py36.tar.gz)<br>
+[Standalone 7-zip](http://www.7-zip.org/a/7za920.zip)<br/>
+[Python 3.6.2 x64](https://www.python.org/ftp/python/3.6.2/python-3.6.2-amd64.exe)<br />
+[User Sync Tool 2.2 PY3.6 for Windows](https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2/user-sync-v2.2-windows-py36.tar.gz)<br/>
 [User Sync Tool 2.2 Example Configuration Files](https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2/example-configurations.tar.gz)
