@@ -1,5 +1,41 @@
 ﻿$ErrorActionPreference = "Stop"
 
+function Get-USTFolder{
+    param(
+
+        $USTFolder = "$env:SystemDrive\user_sync"
+    )
+ 
+    if(Test-Path $USTFolder){
+
+        return $USTFolder
+
+    }else{
+        $selectedFolder = Get-Folder
+        if($selectedFolder){
+            return Get-USTFolder -USTFolder $selectedFolder
+        }
+    }
+
+}
+
+Function Get-Folder(){
+    Add-Type -AssemblyName System.Windows.Forms
+
+    $foldername = New-Object System.Windows.Forms.FolderBrowserDialog
+    $form = New-Object System.Windows.Forms.Form -Property @{TopMost = $True}
+    $foldername.Description = "Select User-Sync-Tool folder:"
+    $foldername.rootfolder = "MyComputer"
+    $foldername.ShowNewFolderButton = $false
+
+    if($foldername.ShowDialog($form) -eq "OK")
+    {
+        $folder += $foldername.SelectedPath
+    }
+    return $folder
+}
+
+
 Write-Host "Generate Adobe.IO Self-Signed Certifcation"
 $defaulExpirationDate = (Get-Date).AddYears(5).ToString("d")
 $prompt = Read-Host -Prompt "Enter Certificate Expiring Date [$defaulExpirationDate]" 
@@ -32,43 +68,3 @@ if(Test-Path $OpenSSL){
     Write-Error "Unable to Locate $OpenSSL"
 
 }
-
-function Get-USTFolder{
-    param(
-
-        $USTFolder = "$env:SystemDrive\user_sync"
-    )
- 
-    if(Test-Path $USTFolder){
-
-        return $USTFolder
-
-    }else{
-        $selectedFolder = Get-Folder
-        if($selectedFolder){
-            return Get-USTFolder -USTFolder $selectedFolder
-        }
-    }
-
-}
-
-
-Function Get-Folder()
-
-{
-    Add-Type -AssemblyName System.Windows.Forms
-
-    $foldername = New-Object System.Windows.Forms.FolderBrowserDialog
-    $form = New-Object System.Windows.Forms.Form -Property @{TopMost = $True}
-    $foldername.Description = "Select User-Sync-Tool folder:"
-    $foldername.rootfolder = "MyComputer"
-    $foldername.ShowNewFolderButton = $false
-
-    if($foldername.ShowDialog($form) -eq "OK")
-    {
-        $folder += $foldername.SelectedPath
-    }
-    return $folder
-}
-
-

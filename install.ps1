@@ -136,7 +136,7 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
     $openSSLBinFileName = $openSSLBinURL.Split('/')[-1]
     $openSSLOutputPath = "$DownloadFolder\$openSSLBinFileName"
     $openSSLUSTFolder = "$USTFolder\Utils\openSSL"
-    Write-Host "Downloading Python from $openSSLBinURL"
+    Write-Host "Downloading OpenSSL Win32 Binary from $openSSLBinURL"
     Invoke-WebRequest -Uri $openSSLBinURL -OutFile $openSSLOutputPath
 
     if(Test-Path $openSSLOutputPath){
@@ -154,8 +154,8 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
 
     #Download Adobe.IO Cert generation Script and put it into utils\openSSL folder
     $adobeIOCertScriptURL = "https://raw.githubusercontent.com/bhunut-adobe/user-sync-quick-install/master/adobe_io_certgen.ps1"
-    $adobeIOCertScript = $openSSLBinURL.Split('/')[-1]
-    $adobeIOCertScriptOutputPath = "$USTFolder\Utils\openSSL\$openSSLBinFileName"
+    $adobeIOCertScript = $adobeIOCertScriptURL.Split('/')[-1]
+    $adobeIOCertScriptOutputPath = "$USTFolder\Utils\openSSL\$adobeIOCertScript"
     Write-Host "Downloading Adobe.IO Cert Generation Script from $adobeIOCertScriptURL"
     Invoke-WebRequest -Uri $adobeIOCertScriptURL -OutFile $adobeIOCertScriptOutputPath
 
@@ -163,7 +163,7 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
         
        $batchfile = '@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -file ' + $adobeIOCertScriptOutputPath
 
-       $batchfile | Out-File "$openSSLUSTFolder\Adobe_IO_Cert_Generation.bat" -Force
+       $batchfile | Out-File "$openSSLUSTFolder\Adobe_IO_Cert_Generation.bat" -Force -Encoding ascii
         
     }
 
