@@ -17,8 +17,6 @@ Running from Command Prompt:
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/bhunut-adobe/user-sync-quick-install/master/install.ps1'))"
 ```
 
-This will install User Sync Tool under C:\user_sync
-
 ## Note
 
 This script downloaded the following into temp folder C:\Users\\[Username]\Appdata\Local\Temp\USTDownload

@@ -43,9 +43,12 @@ $prompt = Read-Host -Prompt "Enter Certificate Expiring Date [$defaulExpirationD
 $expirationDay = ($date - (Get-Date)).Days
 $USTFolder = Get-USTFolder
 $OpenSSL = "$USTFolder\Utils\openSSL\openssl.exe"
+$OpenSSLConfig = "$USTFolder\Utils\openSSL\openssl.cnf"
 
 if(Test-Path $OpenSSL){
-    $argslist = @("/c $OpenSSL",'req',
+    $argslist = @("/c $OpenSSL",
+                'req',
+                "-config $OpenSSLConfig",
                 '-x509',
                 '-sha256',
                 '-nodes',

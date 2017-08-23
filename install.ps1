@@ -1,6 +1,4 @@
 ﻿$ErrorActionPreference = "Stop"
-Add-Type -AssemblyName System.IO.Compression.FileSystem
-
 function Expand-Targz {
     param(
         [Parameter(Mandatory=$true,ValueFromPipeline=$true)] 
@@ -26,7 +24,7 @@ function Expand-Targz {
 
         if(Test-Path $7zDownload){
             #Extract downloaded 7-zip to 7-zip temp folder
-            [System.IO.Compression.ZipFile]::ExtractToDirectory($7zDownload, $7zipTempPath)
+            Unzip -zipfile $7zDownload -outdir $7zipTempPath
         }
 
     }
@@ -66,6 +64,29 @@ function Show-SaveDialog(){
     }
     return $folder
 }
+#Source: https://gist.github.com/nachivpn/3e53dd36120877d70aee
+function Unzip($zipfile, $outdir){
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $archive = [System.IO.Compression.ZipFile]::OpenRead($zipfile)
+    foreach ($entry in $archive.Entries)
+    {
+        $entryTargetFilePath = [System.IO.Path]::Combine($outdir, $entry.FullName)
+        $entryDir = [System.IO.Path]::GetDirectoryName($entryTargetFilePath)
+        
+        #Ensure the directory of the archive entry exists
+        if(!(Test-Path $entryDir )){
+            New-Item -ItemType Directory -Path $entryDir | Out-Null 
+        }
+        
+        #If the entry is not a directory entry, then extract entry
+        if(!$entryTargetFilePath.EndsWith("\")){
+            [System.IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $entryTargetFilePath, $true);
+        }
+    }
+        
+    $archive.Dispose()
+}
+
 
 if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
     Write-Host "Elevated."
@@ -98,8 +119,8 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
 
 
     #Set Environment Variable
-
-    [Environment]::SetEnvironmentVariable("PEX_ROOT", "$env:SystemDrive\PEX", "Machine")
+    Write-Host "Set PEX_ROOT System Environment Variable"
+    #[Environment]::SetEnvironmentVariable("PEX_ROOT", "$env:SystemDrive\PEX", "Machine")
     
     #Download UST 2.2 and Extract
     $USTdownloadList = @()
@@ -144,13 +165,20 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
         Write-Host "Extracting $openSSLBinFileName to $openSSLUSTFolder"
         try{
             New-Item -Path $openSSLUSTFolder -ItemType Directory -Force
-            [System.IO.Compression.ZipFile]::ExtractToDirectory($openSSLOutputPath, $openSSLUSTFolder)
+            Unzip -zipfile $openSSLOutputPath -outdir $openSSLUSTFolder
             Write-Host "Completed extracting $openSSLBinFileName to $openSSLUSTFolder"
         }catch{
             
             Write-Error "Unable to extract openSSL"
         }
     }
+
+    #Download Default Openssl.cfg configuration file
+    $openSSLConfigURL = 'http://web.mit.edu/crypto/openssl.cnf'
+    $openSSLConfigFileName = $openSSLConfigURL.Split('/')[-1]
+    $openSSLConfigOutputPath = "$USTFolder\Utils\openSSL\$openSSLConfigFileName"
+    Write-Host "Downloading default openssl.cnf config file from $openSSLConfigURL"
+    Invoke-WebRequest -Uri $openSSLConfigURL -OutFile $openSSLConfigOutputPath
 
     #Download Adobe.IO Cert generation Script and put it into utils\openSSL folder
     $adobeIOCertScriptURL = "https://raw.githubusercontent.com/bhunut-adobe/user-sync-quick-install/master/adobe_io_certgen.ps1"
