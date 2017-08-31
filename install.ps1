@@ -122,10 +122,10 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
     Write-Host "Set PEX_ROOT System Environment Variable"
     #[Environment]::SetEnvironmentVariable("PEX_ROOT", "$env:SystemDrive\PEX", "Machine")
     
-    #Download UST 2.2 and Extract
+    #Download UST 2.2.1 and Extract
     $USTdownloadList = @()
-    $USTdownloadList += "https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2/user-sync-v2.2-windows-py36.tar.gz"
-    $USTdownloadList += "https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2/example-configurations.tar.gz"
+    $USTdownloadList += "https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2.1/user-sync-v2.2.1-windows-py36.tar.gz"
+    $USTdownloadList += "https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2.1/example-configurations.tar.gz"
 
     foreach($download in $USTdownloadList){
         $filename = $download.Split('/')[-1]
