@@ -120,7 +120,7 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
 
     #Set Environment Variable
     Write-Host "Set PEX_ROOT System Environment Variable"
-    #[Environment]::SetEnvironmentVariable("PEX_ROOT", "$env:SystemDrive\PEX", "Machine")
+    [Environment]::SetEnvironmentVariable("PEX_ROOT", "$env:SystemDrive\PEX", "Machine")
     
     #Download UST 2.2.1 and Extract
     $USTdownloadList = @()
