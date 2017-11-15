@@ -96,15 +96,15 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
     $DownloadedItem = @()
 
     #Python Install
-    $python362URL = "https://www.python.org/ftp/python/3.6.2/python-3.6.2-amd64.exe"
+    $python3URL = "https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe"
     
-    $pythonInstaller = $python362URL.Split('/')[-1]
+    $pythonInstaller = $python3URL.Split('/')[-1]
     
     #Create Temp download folder
     New-Item -Path $DownloadFolder -ItemType "Directory" -Force | Out-Null
     $pythonInstallerOutput = "$DownloadFolder\$pythonInstaller"
-    Write-Host "Downloading Python from $python362URL"
-    Invoke-WebRequest -Uri $python362URL -OutFile $pythonInstallerOutput
+    Write-Host "Downloading Python from $python3URL"
+    Invoke-WebRequest -Uri $python3URL -OutFile $pythonInstallerOutput
 
     if(Test-Path $pythonInstallerOutput){
         #Passive Install of Python. This will show progressbar and error.
