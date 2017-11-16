@@ -195,6 +195,23 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
         
     }
 
+    #Create Test-Mode and Live-Mode UST Batch file
+    if(Test-Path $USTFolder){
+       $test_mode_batchfile = @"
+REM "Running UST in TEST-MODE"
+cd $USTFolder
+python user-sync.pex --process-groups --users mapped -t
+pause
+"@
+       $test_mode_batchfile | Out-File "$USTFolder\Run_UST_Test_Mode.bat" -Force -Encoding ascii
+
+       $live_mode_batchfile = @"
+REM "Running UST"
+cd $USTFolder
+python user-sync.pex --process-groups --users mapped
+"@
+       $live_mode_batchfile | Out-File "$USTFolder\Run_UST_Live.bat" -Force -Encoding ascii
+    }
 
     #Delete Temp DownloadFolder for UST, Python and Config files
     Remove-Item -Path $DownloadFolder -Recurse -Confirm:$false -Force -Verbose
