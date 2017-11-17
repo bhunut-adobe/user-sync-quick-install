@@ -131,6 +131,7 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
         $filename = $download.Split('/')[-1]
         $downloadfile = "$DownloadFolder\$filename"
         #Download file
+        Write-Host "Downloading $filename from $download"
         Invoke-WebRequest -Uri $download -OutFile $downloadfile
         if(Test-Path $downloadfile){
            #Extract downloaded file to UST Folder
