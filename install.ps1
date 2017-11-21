@@ -100,7 +100,7 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
 
     #Check if Python is installed, if not Install Python
     $pythonInstalled = Get-CimInstance -ClassName 'Win32_Product' -Filter "Name like 'Python% Core Interpreter (64-bit)'"
-    if($pythonInstalled -and [Version]$pythonInstalled.Version -ge [Version]"3.6.3000"){
+    if(-Not ($pythonInstalled -and [Version]$pythonInstalled.Version -ge [Version]"3.6.3000")){
         $python3URL = "https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe"
         $pythonInstaller = $python3URL.Split('/')[-1]
         $pythonInstallerOutput = "$DownloadFolder\$pythonInstaller"
