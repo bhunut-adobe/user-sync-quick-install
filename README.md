@@ -1,6 +1,6 @@
 ## Synopsis
 
-This is a powershell script to help you initally setup [User Sync Tool from Adobe](https://github.com/adobe-apiplatform/user-sync.py) on a windows system. This tool will download & install python 3.6.3 x64, Set Environment Variable, Download [User Sync Tool 2.2](https://github.com/adobe-apiplatform/user-sync.py/releases/tag/v2.2) and example configuration files and place them in the correct location.
+This is a powershell script to help you initally setup [User Sync Tool from Adobe](https://github.com/adobe-apiplatform/user-sync.py) on a windows system. This tool will download & install python 3.6.3 x64, Set Environment Variable, Download [User Sync Tool](https://github.com/adobe-apiplatform/user-sync.py/releases) and example configuration files and place them in the correct location.
 
 ## Installation
 
@@ -24,5 +24,5 @@ This script downloaded the following into temp folder C:\Users\\[Username]\Appda
 [Standalone 7-zip](http://www.7-zip.org/a/7za920.zip)<br/>
 [Python 3.6.3 x64](https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe)<br />
 [OpenSSL Win32 Binary 1.0.1l](https://indy.fulgan.com/SSL/openssl-1.0.2l-x64_86-win64.zip)<br />
-[User Sync Tool 2.2 PY3.6 for Windows](https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2/user-sync-v2.2-windows-py36.tar.gz)<br/>
-[User Sync Tool 2.2 Example Configuration Files](https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2/example-configurations.tar.gz)
+[User Sync Tool 2.2.2 PY3.6 for Windows](https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2.2/user-sync-v2.2.2-windows-py363.tar.gz)<br/>
+[User Sync Tool Example Configuration Files](https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2.1/example-configurations.tar.gz)

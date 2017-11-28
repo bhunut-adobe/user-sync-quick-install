@@ -38,9 +38,14 @@ Function Get-Folder(){
 
 Write-Host "Generate Adobe.IO Self-Signed Certifcation"
 $defaulExpirationDate = (Get-Date).AddYears(5).ToString("d")
-$prompt = Read-Host -Prompt "Enter Certificate Expiring Date [$defaulExpirationDate]" 
-[datetime]$date = ($defaulExpirationDate,$prompt)[[bool]$prompt]
-$expirationDay = ($date - (Get-Date)).Days
+
+do{
+    $inputDate = Get-Date $(Read-Host -Prompt "Enter Certificate Expiring Date [$defaulExpirationDate]") -Hour (Get-Date).Hour -Minute ((Get-Date).Minute + 1)
+
+}while($inputDate -le (Get-Date))
+
+$expirationDay = ($inputDate - (Get-Date)).Days
+
 $USTFolder = Get-USTFolder
 $OpenSSL = "$USTFolder\Utils\openSSL\openssl.exe"
 $OpenSSLConfig = "$USTFolder\Utils\openSSL\openssl.cnf"

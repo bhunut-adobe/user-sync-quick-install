@@ -95,26 +95,31 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
 
     $DownloadedItem = @()
 
-    #Python Install
-    $python3URL = "https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe"
-    
-    $pythonInstaller = $python3URL.Split('/')[-1]
-    
     #Create Temp download folder
     New-Item -Path $DownloadFolder -ItemType "Directory" -Force | Out-Null
-    $pythonInstallerOutput = "$DownloadFolder\$pythonInstaller"
-    Write-Host "Downloading Python from $python3URL"
-    Invoke-WebRequest -Uri $python3URL -OutFile $pythonInstallerOutput
 
-    if(Test-Path $pythonInstallerOutput){
-        #Passive Install of Python. This will show progressbar and error.
-        Write-Host "Begin Python Installation"
-        $pythonProcess = Start-Process $pythonInstallerOutput -ArgumentList @('/passive', 'InstallAllUsers=1', 'PrependPath=1') -Wait -PassThru
-        if($pythonProcess.ExitCode -eq 0){
-             Write-Host "Python Installation Completed"
-        }else{
-             Write-Error "Python Installation Completed/Error with ExitCode: $($pythonProcess.ExitCode)"
+    #Check if Python is installed, if not Install Python
+    $pythonInstalled = Get-CimInstance -ClassName 'Win32_Product' -Filter "Name like 'Python% Core Interpreter (64-bit)'"
+    if(-Not ($pythonInstalled -and [Version]$pythonInstalled.Version -ge [Version]"3.6.3000")){
+        $python3URL = "https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe"
+        $pythonInstaller = $python3URL.Split('/')[-1]
+        $pythonInstallerOutput = "$DownloadFolder\$pythonInstaller"
+
+        Write-Host "Downloading Python from $python3URL"
+
+        Invoke-WebRequest -Uri $python3URL -OutFile $pythonInstallerOutput
+        if(Test-Path $pythonInstallerOutput){
+            #Passive Install of Python. This will show progressbar and error.
+            Write-Host "Begin Python Installation"
+            $pythonProcess = Start-Process $pythonInstallerOutput -ArgumentList @('/passive', 'InstallAllUsers=1', 'PrependPath=1') -Wait -PassThru
+            if($pythonProcess.ExitCode -eq 0){
+                 Write-Host "Python Installation Completed"
+            }else{
+                 Write-Error "Python Installation Completed/Error with ExitCode: $($pythonProcess.ExitCode)"
+            }
         }
+    }else{
+        Write-Host "Python Version $($pythonInstalled.Version) already installed"
     }
 
 
@@ -122,9 +127,9 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
     Write-Host "Set PEX_ROOT System Environment Variable"
     [Environment]::SetEnvironmentVariable("PEX_ROOT", "$env:SystemDrive\PEX", "Machine")
     
-    #Download UST 2.2.1 and Extract
+    #Download UST 2.2.2 and Extract
     $USTdownloadList = @()
-    $USTdownloadList += "https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2.1/user-sync-v2.2.1-windows-py36.tar.gz"
+    $USTdownloadList += "https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2.2/user-sync-v2.2.2-windows-py363.tar.gz"
     $USTdownloadList += "https://github.com/adobe-apiplatform/user-sync.py/releases/download/v2.2.1/example-configurations.tar.gz"
 
     foreach($download in $USTdownloadList){
