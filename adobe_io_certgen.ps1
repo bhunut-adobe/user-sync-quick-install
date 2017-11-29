@@ -40,11 +40,12 @@ Write-Host "Generate Adobe.IO Self-Signed Certifcation"
 $defaulExpirationDate = (Get-Date).AddYears(5).ToString("d")
 
 do{
-    $inputDate = Get-Date $(Read-Host -Prompt "Enter Certificate Expiring Date [$defaulExpirationDate]") -Hour (Get-Date).Hour -Minute ((Get-Date).Minute + 1)
+    $inputDate = Read-Host -Prompt "Enter Certificate Expiring Date [$defaulExpirationDate]"
+    $inputDate = ($defaulExpirationDate,$inputDate)[[bool]$inputDate]
+    $expirationDate = Get-Date $inputDate  -Hour (Get-Date).Hour -Minute ((Get-Date).Minute + 1)
+}while($expirationDate -le (Get-Date))
 
-}while($inputDate -le (Get-Date))
-
-$expirationDay = ($inputDate - (Get-Date)).Days
+$expirationDay = ($expirationDate - (Get-Date)).Days
 
 $USTFolder = Get-USTFolder
 $OpenSSL = "$USTFolder\Utils\openSSL\openssl.exe"
