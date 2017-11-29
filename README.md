@@ -9,12 +9,15 @@ Simply copy either command below to run the install script remotely.
 Running from PowerShell:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/bhunut-adobe/user-sync-quick-install/master/install.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process; `
+iex ((New-Object System.Net.WebClient).DownloadString('https://git.io/vbItN'))
 ```
 Running from Command Prompt:
 
 ```dos
-@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/bhunut-adobe/user-sync-quick-install/master/install.ps1'))"
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" ^
+-NoProfile -InputFormat None -ExecutionPolicy Bypass -Command ^
+"iex ((New-Object System.Net.WebClient).DownloadString('https://git.io/vbItN'))"
 ```
 
 ## Note
