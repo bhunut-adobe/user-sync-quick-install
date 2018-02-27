@@ -1,4 +1,7 @@
 ﻿$ErrorActionPreference = "Stop"
+ #Force Invoke-WebRequest to use TLS 1.2
+ [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+ 
 function Expand-Targz {
     param(
         [Parameter(Mandatory=$true,ValueFromPipeline=$true)] 
