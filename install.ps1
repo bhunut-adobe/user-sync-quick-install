@@ -23,7 +23,7 @@ function Expand-Targz {
         
         #Download 7z Command Line from 7-zip.org
         Write-Host "Downloading 7-zip Standalone ($7zURL)"
-        Invoke-WebRequest -Uri $7zURL -OutFile $7zDownload
+        Invoke-WebRequest -Uri $7zURL -OutFile $7zDownload -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
 
         if(Test-Path $7zDownload){
             #Extract downloaded 7-zip to 7-zip temp folder
