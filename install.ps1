@@ -198,7 +198,7 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
 
     if(Test-Path $adobeIOCertScriptOutputPath){
         
-       $batchfile = '@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -file ' + $adobeIOCertScriptOutputPath
+       $batchfile = '@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -file %~dp0\adobe_io_certgen.ps1'
 
        $batchfile | Out-File "$openSSLUSTFolder\Adobe_IO_Cert_Generation.bat" -Force -Encoding ascii
         
@@ -208,7 +208,7 @@ if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsI
     if(Test-Path $USTFolder){
        $test_mode_batchfile = @"
 REM "Running UST in TEST-MODE"
-cd $USTFolder
+cd %~dp0
 python user-sync.pex --process-groups --users mapped -t
 pause
 "@
@@ -216,7 +216,7 @@ pause
 
        $live_mode_batchfile = @"
 REM "Running UST"
-cd $USTFolder
+cd %~dp0
 python user-sync.pex --process-groups --users mapped
 "@
        $live_mode_batchfile | Out-File "$USTFolder\Run_UST_Live.bat" -Force -Encoding ascii
